@@ -12,9 +12,9 @@ public class DragAndDrop : BasicFunction
     {
         if(selected)
         {
-            Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            ParentPos = cursorPos - cursorDif;
-            if(Input.GetMouseButtonUp(0))
+            //Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            ParentPos = WindowManager.Instance.cursorPosition - cursorDif;
+            if(IsReleased())
             {
                 Debug.Log("End Drag");
                 selected = false;
@@ -24,11 +24,11 @@ public class DragAndDrop : BasicFunction
 
     public void OnMouseOver()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(IsClicked())
         {
             Debug.Log("Start Drag");
             selected = true;
-            cursorDif = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            cursorDif = WindowManager.Instance.cursorPosition;
             cursorDif -= ParentPos;
         }
     }

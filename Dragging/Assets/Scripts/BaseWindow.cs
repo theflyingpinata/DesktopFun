@@ -6,7 +6,8 @@ public class BaseWindow : MonoBehaviour
 {
     public List<BasicFunction> functions;
 
-    public void Awake()
+
+    public void OnEnable()
     {
         SetFunctionsParent();
         WindowManager.Instance.AddWindow(gameObject);
@@ -20,7 +21,10 @@ public class BaseWindow : MonoBehaviour
     {
         foreach (BasicFunction bf in functions)
         {
-            bf.Parent = this;
+            if (bf != null)
+            {
+                bf.Parent = this;
+            }
         }
     }
 }

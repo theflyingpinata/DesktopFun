@@ -6,11 +6,12 @@ public class Close : BasicFunction
 {
     public void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (IsClicked())
         {
-            CloseWindow();
+            CloseThis();
         }
     }
+    
     
     // Destroyes the Parent without warning
     public virtual void CloseWindow()
