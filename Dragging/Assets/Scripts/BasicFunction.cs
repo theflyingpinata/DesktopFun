@@ -65,7 +65,13 @@ public class BasicFunction : MonoBehaviour
         {
             collider2d = gameObject.GetComponent<BoxCollider2D>();
         }
+        Click += Activate;
     }
+    public void Activate()
+    {
+        WindowManager.Instance.MoveToFront(ParentGO);
+    }
+    /*
     // Returns true if the hit collider is this BasicFunctions's
     public bool IsHit()
     {
@@ -86,6 +92,7 @@ public class BasicFunction : MonoBehaviour
     {
         return Input.GetMouseButtonUp(0);// || !IsHit();
     }
+    */
     #endregion
 
     // Some basic functions that can be used by any child class
