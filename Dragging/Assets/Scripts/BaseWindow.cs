@@ -14,7 +14,10 @@ public class BaseWindow : MonoBehaviour
     }
     public void OnDisable()
     {
-        WindowManager.Instance.RemoveWindow(gameObject);
+        if (WindowManager.Instance != null)
+        {
+            WindowManager.Instance.RemoveWindow(gameObject);
+        }
     }
 
     public void SetFunctionsParent()

@@ -9,6 +9,10 @@ public class GenericSingletonClass<T> : MonoBehaviour where T : Component
     {
         get
         {
+            if(applicationIsQuitting)
+            {
+                return null;
+            }
             if(instance == null)
             {
                 instance = FindObjectOfType<T>();
@@ -34,5 +38,12 @@ public class GenericSingletonClass<T> : MonoBehaviour where T : Component
         {
             Destroy(gameObject);
         }
+    }
+
+    private static bool applicationIsQuitting = false;
+    public void OnDestroy()
+    {
+        Debug.Log("Gets destroyed");
+        applicationIsQuitting = true;
     }
 }
