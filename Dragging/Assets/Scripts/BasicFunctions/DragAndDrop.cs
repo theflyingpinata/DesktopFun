@@ -4,34 +4,37 @@ using UnityEngine;
 
 public class DragAndDrop : BasicFunction
 {
-    private Vector2 cursorDif;
-    private bool selected;
+    [SerializeField]
+    private Vector2 cursorDif; // Differenc between anchor and initial cursor position
+    [SerializeField]
+    private Vector2 estimatedCursorSpeed;
 
-
-    public void Update()
-    {
-        if(selected)
-        {
-            //Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            ParentPos = InputManager.Instance.cursorPosition - cursorDif;
-        }
-    }
     public void StartDragging()
     {
         Debug.Log("Start Drag");
-        selected = true;
         cursorDif = InputManager.Instance.cursorPosition;
         cursorDif -= ParentPos;
     }
+
+    public void Drag()
+    {
+        ParentPos = InputManager.Instance.cursorPosition - cursorDif;
+        /*
+        estimatedCursorSpeed = InputManager.Instance.cursorPosition - InputManager.Instance.prevCursorPosition;
+        ParentPos += estimatedCursorSpeed;
+        */
+    }
+
     public void StopDragging()
     {
         Debug.Log("End Drag");
-        selected = false;
     }
+
     public override void Awake()
     {
         base.Awake();
         base.Click += StartDragging;
+        base.Hold += Drag;
         base.Release += StopDragging;
     }
 

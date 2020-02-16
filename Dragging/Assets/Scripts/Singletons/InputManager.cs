@@ -7,12 +7,14 @@ public class InputManager : GenericSingletonClass<InputManager>
     #region Clicking Logic
     public RaycastHit2D hit;
     public Vector2 cursorPosition;
+    public Vector2 prevCursorPosition;
 
     public BasicFunction currentBF; // The BF being clicked
     public BasicFunction heldBF; // The BF being held
     public BasicFunction prevClickedBF; // The previously clicked BF
     public BasicFunction prevHeldBF; // The previously held BF
 
+    public Camera mainCam;
 
     public override void Awake()
     {
@@ -22,6 +24,7 @@ public class InputManager : GenericSingletonClass<InputManager>
         heldBF = null;
         prevClickedBF = null;
         prevHeldBF = null;
+        mainCam = Camera.main;
     }
 
     public void Update()
@@ -34,13 +37,16 @@ public class InputManager : GenericSingletonClass<InputManager>
     // Update InputManager's cursor position and raycast
     public void UpdateMouseInfo()
     {
-        cursorPosition = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        prevCursorPosition = cursorPosition;
+        //Vector3 temp = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+        cursorPosition = (Vector2)mainCam.ScreenToWorldPoint(Input.mousePosition);
         hit = Physics2D.Raycast(cursorPosition, -Vector2.up);//, 100f, 8);
     }
 
     // Make the lastBF the currentBF and update currentBF
     public void UpdateCurrentBasicFunction()
     {
+        currentBF = null;
         if (hit.collider)
         {
             currentBF = hit.collider.GetComponent<BasicFunction>();
