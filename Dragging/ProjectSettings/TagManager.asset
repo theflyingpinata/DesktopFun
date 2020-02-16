@@ -46,3 +46,6 @@ TagManager:
   - name: Windows
     uniqueID: 1827379183
     locked: 0
+  - name: Background
+    uniqueID: 2959893059
+    locked: 0

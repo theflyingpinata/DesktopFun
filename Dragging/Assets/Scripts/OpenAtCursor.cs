@@ -6,15 +6,10 @@ public class OpenAtCursor : BasicFunction
 {
     public GameObject toOpenWindow;
 
-    public void OnMouseOver()
+    public override void Awake()
     {
-        //Debug.Log("pleaseas sasdhow up");
-        if (IsClicked())
-        //if (Input.GetMouseButtonDown(0))
-        {
-            OpenWindow();
-        }
-        
+        base.Awake();
+        base.Click += OpenWindow;
     }
     public void OpenWindow()
     {

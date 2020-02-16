@@ -14,22 +14,25 @@ public class DragAndDrop : BasicFunction
         {
             //Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             ParentPos = InputManager.Instance.cursorPosition - cursorDif;
-            if(IsReleased())
-            {
-                Debug.Log("End Drag");
-                selected = false;
-            }
         }
+    }
+    public void StartDragging()
+    {
+        Debug.Log("Start Drag");
+        selected = true;
+        cursorDif = InputManager.Instance.cursorPosition;
+        cursorDif -= ParentPos;
+    }
+    public void StopDragging()
+    {
+        Debug.Log("End Drag");
+        selected = false;
+    }
+    public override void Awake()
+    {
+        base.Awake();
+        base.Click += StartDragging;
+        base.Release += StopDragging;
     }
 
-    public void OnMouseOver()
-    {
-        if(IsClicked())
-        {
-            Debug.Log("Start Drag");
-            selected = true;
-            cursorDif = InputManager.Instance.cursorPosition;
-            cursorDif -= ParentPos;
-        }
-    }
 }

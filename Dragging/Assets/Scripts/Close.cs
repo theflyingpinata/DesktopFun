@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Close : BasicFunction
 {
+    /*
     public void OnMouseOver()
     {
         if (IsClicked())
@@ -11,12 +12,19 @@ public class Close : BasicFunction
             CloseThis();
         }
     }
+    */
     
     
     // Destroyes the Parent without warning
-    public virtual void CloseWindow()
+    public void CloseWindow()
     {
         Debug.Log("Close");
         GameObject.Destroy(ParentGO);
+    }
+
+    public override void Awake()
+    {
+        base.Awake();
+        base.Click += CloseWindow;
     }
 }

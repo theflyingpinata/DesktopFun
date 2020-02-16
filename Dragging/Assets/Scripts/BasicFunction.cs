@@ -59,7 +59,7 @@ public class BasicFunction : MonoBehaviour
             return collider2d;
         }
     }
-    public void Awake()
+    public virtual void Awake()
     {
         if(collider2d == null)
         {
@@ -144,5 +144,13 @@ public class BasicFunction : MonoBehaviour
     }
 
 
+    #endregion
+
+    #region Events
+    public delegate void ClickHandler();
+    public ClickHandler Click;
+    public ClickHandler Hold;
+    public ClickHandler Release;
+    
     #endregion
 }
