@@ -4,51 +4,12 @@ using UnityEngine;
 
 public class WindowManager : GenericSingletonClass<WindowManager>
 {
-    /*
-    #region Singleto
-    private static WindowManager _instance;
-
-    public static WindowManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<WindowManager>();
-
-                if (_instance == null)
-                {
-                    GameObject go = new GameObject("WindowManager");
-                    _instance = go.AddComponent<WindowManager>();
-                }
-            }
-            return _instance;
-        }
-    }
-
-    private void Awake()
-    {
-        if(_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-
-        LateAwake();
-    }
-    #endregion
-
-    */
     public void Update()
     {
         UpdateLayerOrderOfWindows();
         WindowsCount = Windows.Count;
     }
+
     #region Window Logic
     [SerializeField]
     public LinkedList<GameObject> Windows;
