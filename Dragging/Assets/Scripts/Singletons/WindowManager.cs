@@ -6,8 +6,8 @@ public class WindowManager : GenericSingletonClass<WindowManager>
 {
     public void Update()
     {
-        UpdateLayerOrderOfWindows();
-        WindowsCount = Windows.Count;
+        //UpdateLayerOrderOfWindows();
+        //WindowsCount = Windows.Count;
     }
 
     #region Window Logic
@@ -26,6 +26,8 @@ public class WindowManager : GenericSingletonClass<WindowManager>
         {
             Windows.AddFirst(go);
         }
+        WindowsCount = Windows.Count;
+        UpdateLayerOrderOfWindows();
     }
 
     // Removes the given GameObject from Windows if Windows does contain the GameObject
@@ -35,6 +37,7 @@ public class WindowManager : GenericSingletonClass<WindowManager>
         {
             Windows.Remove(go);
         }
+        WindowsCount = Windows.Count;
     }
     
     // Moves the given GameObject to the front of the LinkedList Windows
@@ -46,6 +49,7 @@ public class WindowManager : GenericSingletonClass<WindowManager>
             Windows.Remove(current);
             Windows.AddFirst(current);
         }
+        UpdateLayerOrderOfWindows();
     }
 
     // Goes through Windows and sets the order in the sorting group layer component to its negative index in Windows
