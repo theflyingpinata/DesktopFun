@@ -69,7 +69,7 @@ public class BasicFunction : MonoBehaviour
     // Returns true if the hit collider is this BasicFunctions's
     public bool IsHit()
     {
-        return collider2d == WindowManager.Instance.hit.collider;
+        return collider2d == InputManager.Instance.hit.collider;
     }
     // Returns true if IsHit is true and the left mouse button was pressed down this frame but not last frame
     public bool IsClicked()

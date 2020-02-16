@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WindowManager : MonoBehaviour
+public class WindowManager : GenericSingletonClass<WindowManager>
 {
+    /*
     #region Singleto
     private static WindowManager _instance;
 
@@ -42,18 +43,19 @@ public class WindowManager : MonoBehaviour
     }
     #endregion
 
+    */
     public void Update()
     {
         UpdateLayerOrderOfWindows();
-        UpdateClickLogic();
         WindowsCount = Windows.Count;
     }
     #region Window Logic
     [SerializeField]
     public LinkedList<GameObject> Windows;
     public int WindowsCount;
-    private void LateAwake()
+    public override void Awake()
     {
+        base.Awake();
         Windows = new LinkedList<GameObject>();
     }
     // Adds the given GameObject to Windows if Windows does not contain the GameObject
@@ -99,13 +101,5 @@ public class WindowManager : MonoBehaviour
     #endregion
 
 
-    #region Clicking Logic
-    public RaycastHit2D hit;
-    public Vector2 cursorPosition;
-    public void UpdateClickLogic()
-    {
-        cursorPosition = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        hit = Physics2D.Raycast(cursorPosition, -Vector2.up);//, 100f, 8);
-    }
-    #endregion
+   
 }
