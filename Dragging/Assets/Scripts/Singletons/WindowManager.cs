@@ -18,6 +18,10 @@ public class WindowManager : GenericSingletonClass<WindowManager>
     {
         base.Awake();
         Windows = new LinkedList<GameObject>();
+        if(InputManager.Instance != null)
+        {
+            Debug.Log("InputManager.Instance");
+        }
     }
     // Adds the given GameObject to Windows if Windows does not contain the GameObject
     public void AddWindow(GameObject go)
