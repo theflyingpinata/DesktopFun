@@ -9,10 +9,14 @@ public class InputManager : GenericSingletonClass<InputManager>
     public Vector2 cursorPosition;
     public Vector2 prevCursorPosition;
 
+    // Last is before current
+    // Prev is previous frame
+    public BasicFunction hoverBF; // The BF that the mouse is over
+    public BasicFunction prevHoverBF; // The BF that the mouse is over last frame
     public BasicFunction currentBF; // The BF being clicked
     public BasicFunction heldBF; // The BF being held
-    public BasicFunction prevClickedBF; // The previously clicked BF
-    public BasicFunction prevHeldBF; // The previously held BF
+    public BasicFunction lastClickedBF; // The last clicked BF
+    public BasicFunction lastHeldBF; // The last held BF
 
     public Camera mainCam;
 
@@ -20,10 +24,11 @@ public class InputManager : GenericSingletonClass<InputManager>
     {
         base.Awake();
         // Set up BasicFunctions held
+        hoverBF = null;
         currentBF = null;
         heldBF = null;
-        prevClickedBF = null;
-        prevHeldBF = null;
+        lastClickedBF = null;
+        lastHeldBF = null;
         mainCam = Camera.main;
     }
 
@@ -40,23 +45,31 @@ public class InputManager : GenericSingletonClass<InputManager>
         prevCursorPosition = cursorPosition;
         //Vector3 temp = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
         cursorPosition = (Vector2)mainCam.ScreenToWorldPoint(Input.mousePosition);
-        hit = Physics2D.Raycast(cursorPosition, -Vector2.up);//, 100f, 8);
+        hit = Physics2D.Raycast(cursorPosition, Vector2.zero);//, 100f, 8);
     }
 
     // Make the lastBF the currentBF and update currentBF
     public void UpdateCurrentBasicFunction()
     {
-        currentBF = null;
+        prevHoverBF = hoverBF;
+        hoverBF = null;
+
         if (hit.collider)
         {
-            currentBF = hit.collider.GetComponent<BasicFunction>();
+            hoverBF = hit.collider.GetComponent<BasicFunction>();
+        }
+        else
+        {
+            currentBF = null;
         }
     }
 
     // Will check for clicker, held, and relased mouse states and Invoke the right delegates in the right BasicFunction scripts
     public void HandleMouseInput()
     {
-
+        InvokeExit();
+        InvokeEnter();
+        InvokeHover();
         if (Input.GetMouseButtonDown(0))
         {
             InvokeClick();
@@ -74,14 +87,37 @@ public class InputManager : GenericSingletonClass<InputManager>
 
         
     }
+
+    public void InvokeEnter()
+    {
+        if(hoverBF && hoverBF != prevHoverBF)
+        {
+            hoverBF.Enter?.Invoke();
+        }
+    }
+    public void InvokeExit()
+    {
+        if (prevHoverBF && prevHoverBF != hoverBF)
+        {
+            prevHoverBF.Exit?.Invoke();
+        }
+    }
+    public void InvokeHover()
+    {
+        if(hoverBF)
+        {
+            hoverBF.Hover?.Invoke();
+        }
+    }
     public void InvokeClick()
     {
-        if (currentBF)
+        if (hoverBF)
         {
+            currentBF = hoverBF;
             Debug.Log("we hit something captain!");
             currentBF.Click?.Invoke();
 
-            prevClickedBF = currentBF;
+            lastClickedBF = currentBF;
             heldBF = currentBF;
         }
     }
@@ -94,14 +130,18 @@ public class InputManager : GenericSingletonClass<InputManager>
             heldBF.Hold?.Invoke();
         }
     }
+
     public void InvokeRelease()
     {
-        if (heldBF)
+        if (currentBF)
         {
             Debug.Log("we released something captain!");
-            heldBF.Release?.Invoke();
+            currentBF.Release?.Invoke();
 
-            prevHeldBF = heldBF;
+        }
+        if (hoverBF)
+        {
+            lastHeldBF = heldBF;
             heldBF = null;
         }
     }

@@ -25,6 +25,6 @@ public class Close : BasicFunction
     public override void Awake()
     {
         base.Awake();
-        base.Click += CloseWindow;
+        base.Release += CloseWindow;
     }
 }

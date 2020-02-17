@@ -122,6 +122,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
   collider2d: {fileID: 0}
+  focusColors: {fileID: 11400000, guid: a9ebfa4f70d71694ca0f52d747ecb500, type: 2}
+  spriteRenderer: {fileID: 0}
   toOpenWindow: {fileID: 8365653380164508710}
 --- !u!1 &2692004912779374354
 GameObject:

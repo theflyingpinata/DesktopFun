@@ -61,38 +61,27 @@ public class BasicFunction : MonoBehaviour
     }
     public virtual void Awake()
     {
-        if(collider2d == null)
+        if (collider2d == null)
         {
             collider2d = gameObject.GetComponent<BoxCollider2D>();
         }
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        }
         Click += Activate;
+
+        // Changing color
+
+        Click += new ClickHandler(() => { if (focusColors) { ChangeSpriteColor(focusColors.Pressed); } });
+        Release += new ClickHandler(() => { if (focusColors) { ChangeSpriteColor(focusColors.Normal); } });
+        Enter += new ClickHandler(() => { if (focusColors) { ChangeSpriteColor(focusColors.Hover); } });
+        Exit += new ClickHandler(() => { if (focusColors) { ChangeSpriteColor(focusColors.Normal); } });
     }
     public void Activate()
     {
         WindowManager.Instance.MoveToFront(ParentGO);
     }
-    /*
-    // Returns true if the hit collider is this BasicFunctions's
-    public bool IsHit()
-    {
-        return collider2d == InputManager.Instance.hit.collider;
-    }
-    // Returns true if IsHit is true and the left mouse button was pressed down this frame but not last frame
-    public bool IsClicked()
-    {
-        bool clicked = Input.GetMouseButtonDown(0) && IsHit();
-        if (clicked)
-        {
-            WindowManager.Instance.MoveToFront(ParentGO);
-        }
-            return clicked;
-    }
-    // Returns true if
-    public bool IsReleased()
-    {
-        return Input.GetMouseButtonUp(0);// || !IsHit();
-    }
-    */
     #endregion
 
     // Some basic functions that can be used by any child class
@@ -158,6 +147,23 @@ public class BasicFunction : MonoBehaviour
     public ClickHandler Click;
     public ClickHandler Hold;
     public ClickHandler Release;
-    
+    public ClickHandler Enter;
+    public ClickHandler Exit;
+    public ClickHandler Hover;
+
+    #endregion
+
+    #region Coloring
+    public FocusColors focusColors;
+    public SpriteRenderer spriteRenderer;
+
+    public void ChangeSpriteColor(Color color)
+    {
+        Debug.Log("This part works");
+        if (spriteRenderer)
+        {
+            spriteRenderer.color = color;
+        }
+    }
     #endregion
 }

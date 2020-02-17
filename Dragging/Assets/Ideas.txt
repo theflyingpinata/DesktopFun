@@ -4,6 +4,4 @@
 - Stuff part (main part)\
 
 TODO
-- It's hard to close windows because of the dragging
-- Make a github repo
-- Sorting order using WindowManager where the last clicked window is on the top
+- Highlight what is being clicked on

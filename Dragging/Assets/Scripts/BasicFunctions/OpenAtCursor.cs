@@ -9,7 +9,7 @@ public class OpenAtCursor : BasicFunction
     public override void Awake()
     {
         base.Awake();
-        base.Click += OpenWindow;
+        base.Release += OpenWindow;
     }
     public void OpenWindow()
     {
