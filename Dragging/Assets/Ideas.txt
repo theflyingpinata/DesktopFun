@@ -4,4 +4,4 @@
 - Stuff part (main part)\
 
 TODO
-- Highlight what is being clicked on
+- Disabled and Enabled logic

@@ -33,7 +33,7 @@ public class DragAndDrop : BasicFunction
     public override void Awake()
     {
         base.Awake();
-        base.Click += StartDragging;
+        base.Press += StartDragging;
         base.Hold += Drag;
         base.Release += StopDragging;
     }

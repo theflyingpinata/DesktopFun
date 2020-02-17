@@ -69,14 +69,19 @@ public class BasicFunction : MonoBehaviour
         {
             spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         }
-        Click += Activate;
+        Press += Activate;
 
         // Changing color
 
-        Click += new ClickHandler(() => { if (focusColors) { ChangeSpriteColor(focusColors.Pressed); } });
+        // I Don't want to make this invidual methods but I might :/
+        Press += new ClickHandler(() => { if (focusColors) { ChangeSpriteColor(focusColors.Pressed); } });
         Release += new ClickHandler(() => { if (focusColors) { ChangeSpriteColor(focusColors.Normal); } });
         Enter += new ClickHandler(() => { if (focusColors) { ChangeSpriteColor(focusColors.Hover); } });
         Exit += new ClickHandler(() => { if (focusColors) { ChangeSpriteColor(focusColors.Normal); } });
+
+        Enable += new ClickHandler(() => { if (focusColors) { ChangeSpriteColor(focusColors.Normal); } });
+        Disable += new ClickHandler(() => { if (focusColors) { ChangeSpriteColor(focusColors.Disabled); } });
+
     }
     public void Activate()
     {
@@ -144,12 +149,15 @@ public class BasicFunction : MonoBehaviour
 
     #region Events
     public delegate void ClickHandler();
-    public ClickHandler Click;
+    public ClickHandler Press;
     public ClickHandler Hold;
     public ClickHandler Release;
     public ClickHandler Enter;
     public ClickHandler Exit;
     public ClickHandler Hover;
+
+    public ClickHandler Enable;
+    public ClickHandler Disable;
 
     #endregion
 
@@ -159,10 +167,39 @@ public class BasicFunction : MonoBehaviour
 
     public void ChangeSpriteColor(Color color)
     {
-        Debug.Log("This part works");
+        //Debug.Log("This part works");
         if (spriteRenderer)
         {
             spriteRenderer.color = color;
+        }
+    }
+    #endregion
+
+    #region Active logic
+    [SerializeField]
+    private bool active = true;
+    public bool Active
+    {
+        get
+        {
+            return active;
+        }
+    }
+
+    // Checks if given bool is different from active. If it is, it sets active to the given bool and calls the correct delegate, either Enable or Disable
+    public void SetActive(bool newActive)
+    {
+        if(active != newActive)
+        {
+            active = newActive;
+            if (newActive)
+            {
+                Enable?.Invoke();
+            }
+            else
+            {
+                Disable?.Invoke();
+            }
         }
     }
     #endregion

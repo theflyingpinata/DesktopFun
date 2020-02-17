@@ -10,6 +10,6 @@ public class FocusColors : ScriptableObject
     public Color Normal = Color.white;
     public Color Hover = Color.white;
     public Color Pressed = Color.white;
-    public Color Disbaled = Color.white;
+    public Color Disabled = Color.white;
     #endregion
 }

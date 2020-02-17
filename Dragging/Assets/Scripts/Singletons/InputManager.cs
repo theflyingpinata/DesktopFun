@@ -90,32 +90,32 @@ public class InputManager : GenericSingletonClass<InputManager>
 
     public void InvokeEnter()
     {
-        if(hoverBF && hoverBF != prevHoverBF)
+        if(hoverBF && hoverBF != prevHoverBF  && hoverBF.Active)
         {
             hoverBF.Enter?.Invoke();
         }
     }
     public void InvokeExit()
     {
-        if (prevHoverBF && prevHoverBF != hoverBF)
+        if (prevHoverBF && prevHoverBF != hoverBF && prevHoverBF.Active)
         {
             prevHoverBF.Exit?.Invoke();
         }
     }
     public void InvokeHover()
     {
-        if(hoverBF)
+        if(hoverBF && hoverBF.Active)
         {
             hoverBF.Hover?.Invoke();
         }
     }
     public void InvokeClick()
     {
-        if (hoverBF)
+        if (hoverBF && hoverBF.Active)
         {
             currentBF = hoverBF;
             Debug.Log("we hit something captain!");
-            currentBF.Click?.Invoke();
+            currentBF.Press?.Invoke();
 
             lastClickedBF = currentBF;
             heldBF = currentBF;
@@ -124,7 +124,7 @@ public class InputManager : GenericSingletonClass<InputManager>
 
     public void InvokeHeld()
     {
-        if (heldBF)
+        if (heldBF && heldBF.Active)
         {
             //Debug.Log("we released something captain!");
             heldBF.Hold?.Invoke();
@@ -133,13 +133,13 @@ public class InputManager : GenericSingletonClass<InputManager>
 
     public void InvokeRelease()
     {
-        if (currentBF)
+        if (currentBF && hoverBF.Active)
         {
             Debug.Log("we released something captain!");
             currentBF.Release?.Invoke();
 
         }
-        if (hoverBF)
+        if (hoverBF && hoverBF.Active)
         {
             lastHeldBF = heldBF;
             heldBF = null;
