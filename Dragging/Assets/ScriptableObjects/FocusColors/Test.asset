@@ -15,4 +15,4 @@ MonoBehaviour:
   Normal: {r: 1, g: 1, b: 1, a: 1}
   Hover: {r: 1, g: 0.051886797, b: 0.051886797, a: 1}
   Pressed: {r: 0.20225172, g: 0.2866182, b: 0.9528302, a: 1}
-  Disbaled: {r: 1, g: 1, b: 1, a: 1}
+  Disabled: {r: 1, g: 0, b: 0.9345741, a: 1}
